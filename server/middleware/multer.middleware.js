@@ -2,7 +2,7 @@ const multer = require("multer");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "assets/"); // Store in a temporary 'assets' folder
+    cb(null, "assets/"); // Store in  'assets' folder
   },
   filename: (req, file, cb) => {
     console.log(file);

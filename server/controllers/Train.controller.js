@@ -35,20 +35,21 @@ exports.addTrain = async (req, res) => {
 };
 
 exports.getTrainAvailability = async (req, res) => {
+  console.log("Hi", req.query);
   const { source, destination } = req.query;
   console.log(source, destination);
   try {
     let trains = await Train.find({ source, destination });
-
+    let totalAvailable = trains.map((train) => {
+      return {
+        train_id: train._id,
+        train_name: train.trainName,
+        available_seats: train.seatCapacity - train.bookedSeats,
+      };
+    });
     res.status(http.ACCEPTED).send({
       msg: "success",
-      totalTrains: trains.map((train) => {
-        return {
-          train_id: train._id,
-          train_name: train.trainName,
-          available_seats: +train.seatCapacity - +train.bookedSeats,
-        };
-      }),
+      totalTrains: totalAvailable,
     });
   } catch (e) {
     res.status(http.BAD_REQUEST).send(e);

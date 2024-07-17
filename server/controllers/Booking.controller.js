@@ -8,7 +8,7 @@ const bookSeat = async (req, res) => {
   const { userId, noOfSeats } = req.body;
 
   try {
-    const train = await Train.findById(trainId);
+    const train = await Train.findById({ _id: trainId });
     if (!train) throw new Error("Train not found");
 
     if (train.bookedSeats + noOfSeats > train.seatCapacity) {
@@ -31,13 +31,13 @@ const bookSeat = async (req, res) => {
     train.bookedSeats += noOfSeats;
     await train.save();
 
-    res.status(201).send({
+    res.status(http.CREATED).send({
       message: "Seat booked successfully",
       booking_id: booking._id,
       seat_numbers: seatNumbers,
     });
   } catch (e) {
-    res.status(400).send(e);
+    res.status(http.BAD_REQUEST).send(e);
   }
 };
 

@@ -2,7 +2,7 @@ const { http } = require("../lib/helper/const");
 
 // accessCheck function will create a closure
 const accessCheck = (roleArr) => {
-  //it is checking if user is "Instructor then he can access"
+  //it is checking if user is "Admin then he can access"
   return (req, res, next) => {
     try {
       if (roleArr.includes(req.body.role)) {

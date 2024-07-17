@@ -1,8 +1,9 @@
 require("dotenv").config({ silent: true });
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-//hashedPassword function is used to hashed the
 const { saltRounds } = require("../config");
+
+//hashedPassword function is used to hashed the
 exports.hashedPassword = (myPlaintextPassword, saltRound = saltRounds) => {
   const hash = bcrypt.hashSync(myPlaintextPassword, +saltRound);
   return hash;
@@ -92,9 +93,4 @@ exports.verifyRefreshToken = (token, secretKey) => {
   } catch (error) {
     return error;
   }
-};
-// generating a six digit random otp
-exports.generateOtp = () => {
-  let otp = Math.floor(100000 + Math.random() * 900000);
-  return otp;
 };

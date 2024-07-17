@@ -1,4 +1,3 @@
-require("dotenv").config({ silent: true });
 const { verifyAccessToken } = require("../lib/helper/common");
 const { http } = require("../lib/helper/const");
 const User = require("../models/user.model");
@@ -6,7 +5,8 @@ let { secreteAccessKey } = require("../lib/config");
 
 const auth = async (req, res, next) => {
   try {
-    const token = req.headers.authorization?.split(" ")[1];
+    const token = req?.headers?.authorization?.split(" ")[1];
+
     if (!token) {
       return res.status(http.BAD_REQUEST).send({
         msg: "error",
